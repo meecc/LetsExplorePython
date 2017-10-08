@@ -8,8 +8,12 @@ def fib():
       a, b = b, a + b
 
 
-iter = fib()
+iter = list(fib())
+print(iter)
 
+
+iter = fib()
+print("LETS START AFTER THIS")
 try:
    for i in iter:
       print( i),
