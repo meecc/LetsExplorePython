@@ -10,11 +10,11 @@ def hello_world():
 
 @app.route('/test/articles')
 def api_articles():
-    return 'List of ' + url_for('api_articles')
+    return 'List of ' + url_for('hello_world')
 
 @app.route('/articles/<articleid>')
 def api_article(articleid):
     return 'You are reading ' + articleid
 
 if __name__ == '__main__':
-    app.run(debug=False)
+    app.run(debug=True)

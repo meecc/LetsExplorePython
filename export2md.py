@@ -13,11 +13,11 @@ def execute(cmd):
         Purpose  : To execute a command and return exit status
         Argument : cmd - command to execute
         Return   : exit_code
-    """  
+    """
     process = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     (result, error) = process.communicate()
 
-    rc = process.wait() 
+    rc = process.wait()
 
     if rc != 0:
         print ("Error: failed to execute command:", cmd)
@@ -31,7 +31,7 @@ def execute(cmd):
 htmlFiles = []
 #pdfdir = r"D:\code\LetsExplorePython_pdf"
 #os.chdir(pdfdir)
-for d in os.walk(r"D:\code\LetsExplorePython"):
+for d in os.walk(r"."):
     for f in d[2]:
         if f.endswith(".ipynb") and not "-checkpoint" in f:
             print("Processing: ", f)

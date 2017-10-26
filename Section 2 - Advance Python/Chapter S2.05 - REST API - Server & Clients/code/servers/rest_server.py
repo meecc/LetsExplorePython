@@ -26,6 +26,17 @@ def returnOne(name):
         theOne = quarks[i]
     return jsonify({'quarks' : theOne})
 
+
+@app.route('/quaks/<string:name>', methods=['GET'])
+def returnOneNew(name):
+    theOne = {}
+    for q in quarks:
+        if q['name'] == name:
+            theOne = q
+            break
+    return jsonify({'quaks' : theOne })
+
+
 @app.route('/quarks', methods=['POST'])
 def addOne():
     new_quark = request.get_json()
@@ -37,7 +48,7 @@ def editOne(name):
     new_quark = request.get_json()
     for i,q in enumerate(quarks):
       if q['name'] == name:
-        quarks[i] = new_quark    
+        quarks[i] = new_quark
     qs = request.get_json()
     return jsonify({'quarks' : quarks})
 
@@ -45,7 +56,7 @@ def editOne(name):
 def deleteOne(name):
     for i,q in enumerate(quarks):
       if q['name'] == name:
-        del quarks[i]  
+        del quarks[i]
     return jsonify({'quarks' : quarks})
 
 if __name__ == "__main__":

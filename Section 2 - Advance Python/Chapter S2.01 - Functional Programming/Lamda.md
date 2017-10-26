@@ -19,7 +19,7 @@ print(f(1,1))
 ```
 
     2
-    
+
 
 ## Use of Lambda Function
 

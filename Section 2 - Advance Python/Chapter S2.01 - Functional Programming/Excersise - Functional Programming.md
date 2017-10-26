@@ -14,7 +14,7 @@ print(names)
 ```
 
     [-1525715610743626849, 1864234633280094006, -6034146732772895475, -2026123989043073386]
-    
+
 
 Ans: 
 
@@ -32,7 +32,7 @@ print(secret_names)
     <ipython-input-1-9dd45e7450d5> in <module>()
     ----> 1 secret_names = map(hash, names)
           2 print(secret_names)
-    
+
 
     NameError: name 'names' is not defined
 
