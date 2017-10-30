@@ -35,8 +35,8 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 session = Session()
 
-mycard = Card(number="10101")
-user=User(name="mayank")
+mycard = Card(number="101111101")
+user=User(name="mayank johri")
 user.card = mycard
 
 session.add(user)

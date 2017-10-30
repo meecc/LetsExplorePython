@@ -22,7 +22,7 @@ class SomeClass( Base):
     def __eq__(self, other):
         assert type(other) is SomeClass and other.id == self.id
 
-dburl = 'sqlite:///:memory:'
+dburl = 'sqlite:///test.db'
 echo = True
 
 engine = create_engine(dburl, echo=echo)
