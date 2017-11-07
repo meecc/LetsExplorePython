@@ -48,9 +48,11 @@ if __name__ == "__main__":
         Lesson(name="Organic")
     ]
     s.add(t1)
+    s.commit()
+    mlt = s.query(Lesson).filter_by(name="Multiplication").first()
     t2 = Teacher(name="GuptaSir")
     t2.lessons = [
-        Lesson(name="Multiplication"),
+        mlt,
         Lesson(name="Subtraction"),
         Lesson(name="Algebra")
     ]

@@ -78,41 +78,41 @@ students = [
     "Satendra",
     "Rajeev Chaturvedi"]
 
-for student in students:
-    dms.student.append(Students(name=student))
-
-#dms.student.append([Students(name=student, school=dms) for student in students])
-#session.add(dms)
+# for student in students:
+#     dms.student.append(Students(name=student))
+[Students(name=student, school=dms) for student in students]
+# dms.student.append([Students(name=student, school=dms) for student in students])
+session.add(dms)
 session.flush()
 session.commit()
 #
 ## --------------------------------------------------
-cdac_students = [
-    "Manish Gupta",
-    "Viral Kamdar",
-    "Pinakin Purohit",
-    "Nitin Srivastava"]
+# cdac_students = [
+#     "Manish Gupta",
+#     "Viral Kamdar",
+#     "Pinakin Purohit",
+#     "Nitin Srivastava"]
+# #
+# ## select * from school where name='CDAC' excluding first
+# cdac = session.query(School).filter_by(name="CDAC").first()
+# #
+# session.add_all([Students(name=student, school=cdac)
+#                  for student in cdac_students])
+# session.flush()
+# session.commit()
+# ## # --------------------------------------------------
+# #print("^"*30)
+# print(session.dirty)
 #
-## select * from school where name='CDAC' excluding first
-cdac = session.query(School).filter_by(name="CDAC").first()
+# mayank.name = "mayank Johri"
 #
-session.add_all([Students(name=student, school=cdac)
-                 for student in cdac_students])
-session.flush()
-session.commit()
-## # --------------------------------------------------
-#print("^"*30)
-print(session.dirty)
-
-mayank.name = "mayank Johri"
-
-# """
-# session.dirty -
-# """
-### HOW TO USE
-print(session.dirty)
-session.commit()
-print(session.dirty)
+# # """
+# # session.dirty -
+# # """
+# ### HOW TO USE
+# print(session.dirty)
+# session.commit()
+# print(session.dirty)
 #print(help(session.dirty))
 #"""
 #Querying

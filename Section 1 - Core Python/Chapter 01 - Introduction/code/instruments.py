@@ -12,4 +12,5 @@ print("Lets list few instruments:")
 # for each instrument in the list of instruments
 for instrument in instruments:
     print ("> ", instrument)
-    
+    print("....")
+

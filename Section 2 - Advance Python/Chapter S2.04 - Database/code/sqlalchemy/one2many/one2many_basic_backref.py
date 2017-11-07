@@ -125,10 +125,10 @@ print(session.dirty)
 #objects present is returned.
 #-----------------------------------------------------------------------
 #"""
-#print("*" * 20)
-#for student in session.query(Students).order_by(Students.id):
-#    print("{user} studied in {school}".format(user=student.name, school=student.school_id))
-#print("*" * 20)
+print("*" * 20)
+for student in session.query(Students).order_by(Students.id):
+   print("{user} studied in {school}".format(user=student.name, school=student.cream.name))
+print("*" * 20)
 #for result in session.query(Students.name).order_by(Students.id):
 #    print("{user} was a student.".format(user=result.name))
 #
@@ -147,4 +147,4 @@ print(session.dirty)
 #"""
 #print("*" * 20)
 #session.close()
-#engine.dispose()
+engine.dispose()
