@@ -11,7 +11,6 @@ def fib():
 iter = list(fib())
 print(iter)
 
-
 iter = fib()
 print("LETS START AFTER THIS")
 try:

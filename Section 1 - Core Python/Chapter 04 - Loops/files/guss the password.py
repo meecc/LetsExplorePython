@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 """
-Spyder Editor
+Guess the password 
 
-This is a temporary script file.
+Simple program to demostrate the use of while statement
 """
-
 #x=int(input('Enter a passkeyid: '))
 #print(type(x))
 #while x != 10:
@@ -19,10 +18,22 @@ This is a temporary script file.
 #    print(x),
 #    x=input('Enter a passkeyid: ')
 #key=input("Press key...")
-
+"""
+Bad Code
+"""
+print("bad code")
 x=input('Enter a passkeyid: ')
 print(type(x))
 while x != "abc":
     print(x),
     x=input('Enter a passkeyid: ')
+key=input("Press key...")
+
+"""
+Better code
+"""
+print("Better code")
+while x != "abc":
+    x=input('Enter a passkeyid: ')
+    print(x),
 key=input("Press key...")
