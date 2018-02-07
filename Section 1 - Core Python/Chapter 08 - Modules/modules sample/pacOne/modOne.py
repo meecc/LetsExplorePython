@@ -9,4 +9,4 @@ class testOne:
          """
          This is testOne
          """
-         print("Say Cheese")
+         print("Namaskar")

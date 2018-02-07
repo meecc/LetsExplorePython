@@ -8,4 +8,5 @@ Created on Thu Aug  4 08:23:00 2016
 def test():
     print("!!! Jai Hind !!!")
 
-print("ModOne")
+if __name__ == "__main__":
+	print("ModOne")

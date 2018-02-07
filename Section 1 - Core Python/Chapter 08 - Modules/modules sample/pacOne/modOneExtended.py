@@ -6,4 +6,4 @@ Created on Thu Aug  4 08:23:00 2016
 """
 class testOne():
 	def test():
-		print("Say Cheese")
+		print("!!! Happy Pongal !!!")

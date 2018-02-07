@@ -1,3 +1,4 @@
 import modOne
 
-modOne.test()
+if __name__ == "__main__":
+	modOne.test()

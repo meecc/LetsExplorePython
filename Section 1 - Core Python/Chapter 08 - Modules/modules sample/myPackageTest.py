@@ -14,4 +14,4 @@ modTwo.testtwo()
 print(dir(modTwo))
 x = md.testOne
 print(dir(x))
-print(x.testOne())
+x.testOne()
