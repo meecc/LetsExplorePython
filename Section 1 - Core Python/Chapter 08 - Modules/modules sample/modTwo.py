@@ -6,7 +6,7 @@ Created on Thu Aug  4 08:23:50 2016
 """
 
 def test():
-    print("!!! Say Cheese !!! ")
+    print("!!! Namma Metro !!! ")
 
 def test2():
-    print("This is test 2")
+    print("!!! Jai Maharashtra !!!")

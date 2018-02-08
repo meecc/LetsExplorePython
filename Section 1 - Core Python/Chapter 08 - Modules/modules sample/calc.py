@@ -10,7 +10,9 @@ def multi(x, y):
 def div(x, y):
     return(x % y)
 
-print("calc ->" + __name__ + "<-")
+sec_code = 101010001
+#print(globals())
+#print("calc ->" + __name__ + "<-")
 
 # void main():
 if __name__ == "__main__":
