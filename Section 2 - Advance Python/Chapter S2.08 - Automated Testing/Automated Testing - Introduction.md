@@ -32,6 +32,12 @@ def fun(x):
     return x + 1
 
 class MyTest(unittest.TestCase):
+    def setUp(self):
+        pass
+    
+    def tearDown(self):
+        pass
+    
     def test(self):
         self.assertEqual(fun(3), 4)
 ```
@@ -47,11 +53,15 @@ A simple doctest in a function:
 ```python
 def square(x):
     """Return the square of x.
-
+    
+    this should return 4 as 2*2 = 4
     >>> square(2)
     4
+    
     >>> square(-2)
     4
+    
+    This will return 1
     >>> square(-1)
     2
     """
@@ -63,7 +73,7 @@ doctest.testmod()
 ```
 
     **********************************************************************
-    File "__main__", line 8, in __main__.square
+    File "__main__", line 12, in __main__.square
     Failed example:
         square(-1)
     Expected:
@@ -74,7 +84,7 @@ doctest.testmod()
     1 items had failures:
        1 of   3 in __main__.square
     ***Test Failed*** 1 failures.
-    
+
 
 
 
@@ -83,12 +93,32 @@ doctest.testmod()
 
 
 
-When running this module from the command line as in python module.py, the doctests will run and complain if anything is not behaving as described in the docstrings.
-
 
 ```python
+def listme(x):
+    """Return the square of x.
+    
+    this should return 4 as 2*2 = 4
+    >>> listme(2)
+    4
+    
+    >>> listme(-2)
+    4
+    
+    This will return 1
+    >>> listme(-1)
+    [-1, -1]
+    """
+    
+    return x, x
 
+print(listme(2))
 ```
+
+    (2, 2)
+
+
+When running this module from the command line as in python module.py, the doctests will run and complain if anything is not behaving as described in the docstrings.
 
 
 ```python
@@ -108,7 +138,14 @@ class Room(object):
 
 ## Tools
 ---
-### py.test
+### 
+
+# Unit Testing Tools
+
+
+```python
+py.test
+```
 
 
 ```python
@@ -190,9 +227,4 @@ def test_generate():
         raise SkipTest("Skipped")
     for _ in range(random.randint(0, 10)):
         yield skip, _
-```
-
-
-```python
-
 ```

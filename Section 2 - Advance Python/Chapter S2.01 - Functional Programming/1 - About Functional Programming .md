@@ -107,9 +107,21 @@ The simplest way to initialize a pure function in python is by using `lambda` ke
 product_func = lambda x, y: x*y
 
 print(product_func(10, 20))
+print(product_func(10, 2))
 ```
 
     200
+    20
+
+
+
+```python
+concat = lambda x, y: [x, y]
+
+print(concat([1,2,3], 4))
+```
+
+    [[1, 2, 3], 4]
 
 
 ### Functions as Objects
@@ -128,6 +140,14 @@ print(square(10))
 ```
 
     100
+
+
+
+```python
+print(square(100))
+```
+
+    10000
 
 
 
@@ -197,6 +217,30 @@ print(sum_func(product_func, 5)(2, 4))
     13
 
 
+
+```python
+print(sum_func)
+```
+
+    <function <lambda> at 0x7f1b2c089cf8>
+
+
+
+```python
+print(sum_func(product_func, 5))
+```
+
+    <function <lambda> at 0x7f1b2c089f50>
+
+
+
+```python
+print(sum_func(product_func, 5)(3, 5))
+```
+
+    20
+
+
 `13=2*4+5
 F -> product_func
 m => 5
@@ -231,25 +275,38 @@ def outer():
     print(a)
     return inner
 
+# oo = outer
+# print(oo.__doc__)
 o = outer()
 print("*"*20)
 print(o)
 print(o(10))
-
-b = outer()
-print(b)
-print(b(10))
+print(o.__doc__)
 ```
 
-    ~
-    20
+    ~ 20
     ********************
-    <function outer.<locals>.inner at 0x7f566c1be950>
+    <function inner at 0x7f1b2c040758>
     2000
-    ~
-    20
-    <function outer.<locals>.inner at 0x7f566c1bef28>
-    2000
+    
+            inner function
+            
+
+
+
+```python
+b = outer()
+print(b)
+print(b(30))
+print(b.__doc__)
+```
+
+    ~ 20
+    <function inner at 0x7f1b2c0405f0>
+    18000
+    
+            inner function
+            
 
 
 
@@ -280,11 +337,62 @@ print(b(10))
 
     10
     ********************
-    <function outer.<locals>.inner at 0x7f566c1be378>
+    <function inner at 0x7f1b2c089ed8>
     1000
     20
-    <function outer.<locals>.inner at 0x7f566c1bec80>
+    <function inner at 0x7f1b2c040500>
     2000
+
+
+
+```python
+x = 0
+def outer():
+    x = 1
+    def inner():
+        x = 2
+        print("inner:", x)
+
+    inner()
+    print("outer:", x)
+
+outer()
+print("global:", x)
+
+```
+
+    ('inner:', 2)
+    ('outer:', 1)
+    ('global:', 0)
+
+
+
+```python
+x = 0
+def outer():
+    x = 1
+    def inner():
+        nonlocal x
+        x = 2
+        print("inner:", x)
+
+    inner()
+    print("outer:", x)
+
+outer()
+print("global:", x)
+
+# inner: 2
+# outer: 2
+# global: 0
+```
+
+
+      File "<ipython-input-30-2e0b95a04125>", line 5
+        nonlocal x
+                 ^
+    SyntaxError: invalid syntax
+
 
 
 
@@ -315,16 +423,12 @@ print(b)
 print(b(10))
 ```
 
-    10
-    20
-    ********************
-    <function outer.<locals>.inner at 0x7f566c1be9d8>
-    1
-    y =1000
-    ********************
-    <function outer.<locals>.inner at 0x7f566c1bed90>
-    1
-    y =2000
+
+      File "<ipython-input-26-5cfd9ea35045>", line 10
+        nonlocal y
+                 ^
+    SyntaxError: invalid syntax
+
 
 
 ## Inner / Nested Functions - When to use 
@@ -426,7 +530,7 @@ def process(file_name):
     else:
         do_stuff(file_name)
         
-process(["test", "test3", "t33"])
+process(["test", "test3", "t33"])do_stuff(file_name)
         
 process("test.txt")
 ```
@@ -930,7 +1034,7 @@ flipped = {value: key for key, value in original.items()}
 print(flipped)
 ```
 
-    {10: 'c', 34: 'b', 7: 'A', 3: 'Z', 199: 'z'}
+    {3: 'Z', 10: 'c', 199: 'z', 34: 'b', 7: 'A'}
 
 
 
@@ -990,7 +1094,7 @@ for i in range(len(names)):
 print(names_dict)
 ```
 
-    {'Mayank': 'Mr. Normal', 'Manish': 'The Big Boss', 'Aalok': 'Mr. God', 'Roshan Musheer': 'Mr. Cool'}
+    {'Manish': 'The Big Boss', 'Aalok': 'Mr. God', 'Roshan Musheer': 'Mr. Normal', 'Mayank': 'Mr. Cool'}
 
 
 
@@ -1002,12 +1106,13 @@ names = ["Mayank", "Manish", "Aalok", "Roshan Musheer"]
 code_names = ['Mr. Normal', 'Mr. God', 'Mr. Cool', 'The Big Boss']
 
 random.shuffle(code_names)
+
 names_dict = dict(zip(names, code_names))
 
 print(names_dict)
 ```
 
-    {'Mayank': 'Mr. God', 'Manish': 'Mr. Normal', 'Aalok': 'The Big Boss', 'Roshan Musheer': 'Mr. Cool'}
+    {'Manish': 'Mr. Cool', 'Aalok': 'Mr. Normal', 'Roshan Musheer': 'The Big Boss', 'Mayank': 'Mr. God'}
 
 
 ### Generator Comprehension
@@ -1036,7 +1141,7 @@ print(itm / 2)
 
 #### Summary
 
-When struggling to write a comprehension, don’t panic. Start with a for loop first and copy-paste your way into a comprehension.
+When struggling to write a comprehension, `don’t panic`. Start with a for loop first and copy-paste your way into a comprehension.
 
 Any for loop that looks like this:
 
@@ -1049,7 +1154,7 @@ old_things = range(2,20, 3)
 new_things = []
 for ITEM in old_things:
     if condition_based_on(ITEM):
-        new_things.append( ITEM)
+        new_things.append(ITEM)
 print(new_things)
 ```
 
@@ -1104,6 +1209,10 @@ for i in [1, 2, 3, 4, 5]:
 
 ```python
 def fib(n):
+    if n > 1:
+        return fib(n - 1) + fib(n - 2)
+    else:
+        return 1def fib(n):
     if n > 1:
         return fib(n - 1) + fib(n - 2)
     else:
@@ -1167,14 +1276,19 @@ print(lst)
 ```python
 names =  ("Manish", "Aalok", "Mayank","Durga")
 
-lst = tuple(map(len, names))
+tmp = map(len, names)
+print(tmp)
+lst = tuple(tmp)
+
 print(lst)
 
 # This is a map that squares every number in the passed collection:
 power = map(lambda x: x*x, lst)
-print(list(power))
+print(power)
+# print(list(power))
 ```
 
+    [6, 5, 6, 5]
     (6, 5, 6, 5)
     [36, 25, 36, 25]
 
@@ -1200,7 +1314,7 @@ names = ["Mayank", "Manish", "Aalok", "Roshan Musheer"]
 code_names = ['Mr. Normal', 'Mr. God', 'Mr. Cool', 'The Big Boss']
 
 for i in range(len(names)):
-    name = random.choice(code_names)
+#     name = random.choice(code_names)
     while name in names_dict.values():
         name = random.choice(code_names)
     names_dict[names[i]] = name 
@@ -1208,7 +1322,7 @@ for i in range(len(names)):
 print(names_dict)
 ```
 
-    {'Mayank': 'Mr. Cool', 'Manish': 'Mr. God', 'Aalok': 'The Big Boss', 'Roshan Musheer': 'Mr. Normal'}
+    {'Manish': 'The Big Boss', 'Aalok': 'Mr. Cool', 'Roshan Musheer': 'Mr. God', 'Mayank': 'Mr. Normal'}
 
 
 This can be rewritten as a lamba:
@@ -1251,7 +1365,7 @@ print(list(map(pow, lst, lst2)))
 def fahrenheit(T):
     return ((float(9)/5)*T + 32)
 
-temp = (36.5, 37, 37.5,39)
+temp = (36.5, 37, 37.5, 39)
 
 F = map(fahrenheit, temp)
 print(list(F))
@@ -1271,11 +1385,42 @@ from functools import reduce
 product = reduce(lambda a, x: a * x, range(1, 6))
 
 print(product) # (((1 * 2 )* 3 )* 4) * 5
-print(reduce(lambda a, x: a + x, range(1, 6), 10))
+print(reduce(lambda a, x: a + x, range(1, 6), 10)) #-> 10 + 1 + 2+ 
 ```
 
     120
     25
+
+
+
+```python
+
+```
+
+
+
+
+    15
+
+
+
+
+```python
+help(reduce)
+```
+
+    Help on built-in function reduce in module _functools:
+    
+    reduce(...)
+        reduce(function, sequence[, initial]) -> value
+        
+        Apply a function of two arguments cumulatively to the items of a sequence,
+        from left to right, so as to reduce the sequence to a single value.
+        For example, reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) calculates
+        ((((1+2)+3)+4)+5).  If initial is present, it is placed before the items
+        of the sequence in the calculation, and serves as a default when the
+        sequence is empty.
+    
 
 
 In the above example, `x` is the current iterated item and `a` is the accumulator. 
@@ -1283,7 +1428,7 @@ It is the value returned by the execution of the lambda on the previous item. re
 
 What is a in the first iteration? There is no previous iteration result for it to pass along. reduce() uses the first item in the collection for a in the first iteration and starts iterating at the second item. That is, the first x is the second item.
 
-This code counts how often the word 'Sam' appears in a list of strings:
+This code counts how often the word 'the' appears in a list of strings:
 
 
 ```python
@@ -1292,11 +1437,11 @@ sentences = ['Copy the variable assignment for our new empty list'
              'Copy the for loop line, excluding the final'
              'Copy the if statement line, also without the']
 
-sam_count = 0
+count = 0
 for sentence in sentences:
-    sam_count += sentence.count('the')
+    count += sentence.count('the')
 
-print(sam_count)
+print(count)
 ```
 
     6
@@ -1344,7 +1489,7 @@ sentences = ['Copy the variable assignment for our new empty list'
              'Copy the for loop line, excluding the final'
              'Copy the if statement line, also without the']
 
-sam_count = reduce(countme( a),
+sam_count = reduce(countme(a),
                    sentences, 0)
 print(sam_count)
 ```
@@ -1352,25 +1497,17 @@ print(sam_count)
 
     ---------------------------------------------------------------------------
 
-    AttributeError                            Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
-    <ipython-input-63-47b9b62f4d47> in <module>()
+    <ipython-input-27-82284fa6940d> in <module>()
          11              'Copy the if statement line, also without the']
          12 
-    ---> 13 sam_count = reduce(countme( a),
+    ---> 13 sam_count = reduce(countme(a),
          14                    sentences, 0)
          15 print(sam_count)
 
 
-    <ipython-input-63-47b9b62f4d47> in countme(x)
-          4 
-          5 def countme(x):
-    ----> 6     return x.count('the')
-          7 
-          8 sentences = ['Copy the variable assignment for our new empty list'
-
-
-    AttributeError: 'int' object has no attribute 'count'
+    NameError: name 'a' is not defined
 
 
 **NOTE:**
@@ -1396,14 +1533,10 @@ The function `filter(f,l`) needs a function `f` as its first argument. `f` retur
 fib = [0,1,1,2,3,5,8,13,21,34,55]
 
 result = filter(lambda x: x % 2 != 0, fib)
-print(list(result))
-
-result = filter(lambda x: x % 2 == 0, fib)
-print(list(result))
+print(result)
 ```
 
     [1, 1, 3, 5, 13, 21, 55]
-    [0, 2, 8, 34]
 
 
 
@@ -1421,6 +1554,10 @@ apis = [{'name': 'UpdateUser', 'type': 'POST', "body": "{'name': '$name'}"},
     {'name': 'addUser', 'type': 'POST', "body": "{name : '$name'}"},
     {'name': 'listUsers', 'type': 'GET'}]
 
+```
+
+
+```python
 posts = 0
 for api in apis:
     if 'type' in api and api['type'] == 'POST':
@@ -1429,18 +1566,17 @@ for api in apis:
 print(posts)
 ```
 
-    2
-
-
 
 ```python
 posts = 0
 c = []
 
-c = filter(lambda x:'type' in x and  x['type'] == 'POST', apis)
+c = filter(lambda x:'type' in x and x['type'] == 'POST', apis)
+print(c)
 print(len(list(c)))
 ```
 
+    [{'body': "{'name': '$name'}", 'type': 'POST', 'name': 'UpdateUser'}, {'body': "{name : '$name'}", 'type': 'POST', 'name': 'addUser'}]
     2
 
 
@@ -1452,26 +1588,16 @@ people = [{'name': 'Mary', 'height': 160},
 
 heights = map(lambda x: x['height'],
               filter(lambda x: 'height' in x, people))
+print(heights)
 
 if len(heights) > 0:
     from operator import add
     average_height = reduce(add, heights) / len(heights)
+    print(average_height)
 ```
 
-
-    ---------------------------------------------------------------------------
-
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-125-ba6b5a3b64ff> in <module>()
-          6               filter(lambda x: 'height' in x, people))
-          7 
-    ----> 8 if len(heights) > 0:
-          9     from operator import add
-         10     average_height = reduce(add, heights) / len(heights)
-
-
-    TypeError: object of type 'map' has no len()
+    [160, 80]
+    120
 
 
 ## functools

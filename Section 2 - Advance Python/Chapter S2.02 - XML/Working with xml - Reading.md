@@ -1,16 +1,17 @@
 
-# Chapter 2: Working with xml : reading
+# 1. Working with xml : reading
 
-## 1. XML, XPath and DOM
+## 1.1 Introduction
 
-XML stands for eXtensible Markup Language and is designed to describe data. Unlike html, XML is very flexible. Although you must have clean markup, you can invent your own tags or use those supplied by ODD, guidelines and set of tags design for collaboration and shared practices.
+Extensible Markup Language (XML) is a simple, very flexible text format derived from SGML (ISO 8879). Originally designed to meet the challenges of large-scale electronic publishing, XML is also playing an increasingly important role in the exchange of a wide variety of data on the Web and elsewhere.
 
-You've probably heard of TEI; TEI is a nice, complex, complete language for encoding texts.
+It has been defined at https://www.w3.org/XML/. 
 
+Several schema systems exist to aid in the definition of XML-based languages, while programmers have developed many application programming interfaces (APIs) to aid the processing of XML data.
 
-![XML, source of our everyday](images/XML.PNG)
+![XML, source of our everyday](images/XML.SVG)
 
-## 2\. Parsing XML with Python
+## 1.2 Parsing XML with Python
 
 As for querying the web, Python has many libraries for playing with xml. You will most likely encounter the following during your Pythonic journey :
 
@@ -29,7 +30,7 @@ We can import lxml.etree the same way we imported requests earlier.
 from lxml import etree
 ```
 
-### From file to XML object
+## 1.3 From file to XML object
 
 Opening an xml file is actually quite simple : you open it and you parse it. Who would have guessed ?
 
@@ -43,8 +44,8 @@ with open("data/books.xml") as file:
 print(parsed)
 ```
 
-    <lxml.etree._ElementTree object at 0x7feb2c2d1608>
-    
+    <lxml.etree._ElementTree object at 0x0000028E3B5A76C8>
+
 
 As you can see, we obtained an instance of type lxml.etree.\_ElementTree. It means the xml markup has been transformed into something Python understands.
 
@@ -63,8 +64,8 @@ print(parsed)
 # We open the file
 ```
 
-    <lxml.etree._ElementTree object at 0x7feb171bef48>
-    
+    <lxml.etree._ElementTree object at 0x0000028E3B68DC48>
+
 
 From the [documentation](http://lxml.de/parsing.html#parser-options) of the XMLParser function, here are some arguments that might be useful for you :
 
@@ -85,7 +86,7 @@ into
 
 `<root xmlns:a="xmlns1" xmlns:b="xmlns2"><tag xmlns:c="xmlns3" /><tag/><tag /></root>`
 
-### From string to XML object
+### 1.3.1 From string to XML object
 
 lxml parses strings in the same way that it parses files. The syntax differs, but is quite simple :
 
@@ -96,8 +97,8 @@ parsed = etree.fromstring(xml)
 print(parsed)
 ```
 
-    <Element root at 0x262a25b1308>
-    
+    <Element root at 0x28e3b6aed88>
+
 
 **DIY**
 
@@ -108,7 +109,7 @@ Can you parse a xml document made of one tag "humanities" with two children "fie
 # Put your code here
 ```
 
-### Errors and understanding them
+### 1.3.2 Errors and understanding them
 
 Previouly, we have said that lxml was quite strict about xml validity. Let's see an example :
 
@@ -146,7 +147,7 @@ etree.fromstring(xml)
 
 
 
-    <Element fileDesc at 0x7feb17140e08>
+    <Element fileDesc at 0x28e3b6aea88>
 
 
 
@@ -160,7 +161,7 @@ xml = """
 """
 # 
 xml2 = """
-<start></start>
+<start>this is a text</start>
 """
 #
 xml3 = """
@@ -178,7 +179,7 @@ etree.fromstring(xml3)
 
 As you can see, errors are detailed enough so you can correct your own XML, at least manually.
 
-### Node properties and methods
+### 1.3.3 Node properties and methods
 
 *Quick explanation* : Methods and properties are something special in Python and other programming languages. Unlike traditional functions (`len()`) and keys of dictionaries (`a["b"]`), they are part of something bigger.
 
@@ -196,9 +197,9 @@ print(etree.fromstring("<root />"))
 print(etree.fromstring("<root xmlns='http://localhost' />"))
 ```
 
-    <Element root at 0x262a25c1a88>
-    <Element {http://localhost}root at 0x262a25c1a88>
-    
+    <Element root at 0x28e3b6b4848>
+    <Element {http://localhost}root at 0x28e3b6b4848>
+
 
 You can do plenty of things using lxml and access properties or methods of nodes, here is an overview of reading functionalities offered by lxml :
 
@@ -224,8 +225,8 @@ div = etree.fromstring(xml)
 print(parsed)
 ```
 
-    <lxml.etree._ElementTree object at 0x7feb171bef48>
-    
+    <Element root at 0x28e3b6aed88>
+
 
 If we want to retrieve the attributes of our div, we can do as follow :
 
@@ -233,6 +234,8 @@ If we want to retrieve the attributes of our div, we can do as follow :
 ```python
 type_div = div.get("type")
 print(type_div)
+print(div.get("n"))
+
 # If we want a dictionary of attributes
 print(div.attrib)
 attributes_div = dict(div.attrib)
@@ -243,10 +246,11 @@ print(list_attributes_div)
 ```
 
     Book
-    {'n': '1', 'type': 'Book'}
-    {'n': '1', 'type': 'Book'}
+    1
+    {'type': 'Book', 'n': '1'}
+    {'type': 'Book', 'n': '1'}
     [('type', 'Book'), ('n', '1')]
-    
+
 
 Great ! We accessed our first information using lxml ! Now, how about getting somewhere other than the root tag ? To do so, there are two ways :
 
@@ -258,12 +262,14 @@ Both syntaxes return the same results, so it's up to you to decide which one you
 
 ```python
 children = div.getchildren()
+print(children)
 line_1 = children[0] # Because it's a list we can access children through index
 print(line_1)
 ```
 
-    <Element l at 0x7feb17143488>
-    
+    [<Element l at 0x28e3b6b24c8>, <Element {http://www.tei-c.org/ns/1.0}l at 0x28e3b6b2348>, <Element l at 0x28e3b6b2548>, <Element l at 0x28e3b6b2588>, <Element l at 0x28e3b6b2608>, <Element l at 0x28e3b6b2688>, <Element l at 0x28e3b6b26c8>]
+    <Element l at 0x28e3b6b24c8>
+
 
 Now that we have access to our children, we can have access to their text :
 
@@ -273,12 +279,13 @@ print(line_1.text)
 ```
 
     Arma virumque cano, Troiae qui primus ab oris
-    
+
 
 Ok, we are now able to get some stuff done. Remember the namespace naming ? Sometimes it's useful to retrieve namespaces and their prefix :
 
 
 ```python
+#   <tei:l n="2" xmlns:tei="http://www.tei-c.org/ns/1.0">Italiam, fato profugus, Laviniaque venit</tei:l>
 line_2 = children[1]
 print(line_2.nsmap)
 print(line_2.prefix)
@@ -288,7 +295,7 @@ print(line_2.tag)
     {'tei': 'http://www.tei-c.org/ns/1.0'}
     tei
     {http://www.tei-c.org/ns/1.0}l
-    
+
 
 **What you've learned** :
 
@@ -301,10 +308,11 @@ print(line_2.tag)
 
 ----
 
-## 3\. XPath and XSLT with lxml
+## 1.4 \. XPath and XSLT with lxml
+
 ---
 
-### XPath
+### 1.4.1 XPath
 
 XPath is a powerful tool for traversing an xml tree. XML is made of nodes such as tags, comments, texts. These nodes have attributes that can be used to identify them. For example, with the following xml :
 
@@ -320,7 +328,11 @@ the node p will be accessible by `/div/l[@n="1"]/p`. LXML has great support for 
 xml = """<div>
             <l n="1">
                 <p>Text</p> 
+                <p>new p</p>
                 followed
+                <test>
+                    <p>p3</p>
+                </test>
             </l>
             <l n="2">
                 by line two
@@ -331,20 +343,24 @@ xml = """<div>
 div = etree.fromstring(xml)
 print(div)
 # When doing an xpath, the results will be a list
+print("-"*20)
 ps = div.xpath("/div/l")
 for p in ps:
     print(p)
+print("-"*20)
 # print(ps)
-# print(ps[0].values())
-# print(ps[0].text == "Text")
+print([value.values()[0] for value in ps])
+print(ps[0].text == "Text")
 ```
 
-    <Element div at 0x7feb17157a48>
-    
-                
-    
-                
-    
+    <Element div at 0x28e3b6aed48>
+    --------------------
+    <Element l at 0x28e3b68dc88>
+    <Element l at 0x28e3b6ae408>
+    --------------------
+    ['1', '2']
+    False
+
 
 As you can see, the xpath returns a list. This behaviour is intended, since an xpath can retrieve more than one item :
 
@@ -354,7 +370,7 @@ print(div.xpath("//l"))
 ```
 
     [<Element l at 0x28af4804808>, <Element l at 0x28af4843608>, <Element l at 0x28af48434c8>]
-    
+
 
 You see ? The xpath `//l` returns two elements, just like python does in a list. Now, let's apply some xpath to the children and see what happens :
 
@@ -368,89 +384,21 @@ print(line_1.attrib['n'])
 # We look for p
 print(line_1.xpath("p")) # This works
 print(line_1.xpath("./p")) # This works too
-print(line_1.xpath(".//p")) # This still works
-print(line_1.xpath("//p")) 
+
+print(line_1.xpath(".//p")) # This still works 
+
+print(line_1.xpath("//p")) # entire doc
 
 ```
 
     1
-    [<Element p at 0x28af484bd48>]
-    [<Element p at 0x28af484bd48>]
-    [<Element p at 0x28af484bd48>]
-    [<Element p at 0x28af484bd48>, <Element p at 0x28af484f908>, <Element p at 0x28af484f948>]
-    
+    [<Element p at 0x28e3b6ae948>, <Element p at 0x28e3b68dec8>]
+    [<Element p at 0x28e3b6ae948>, <Element p at 0x28e3b68dec8>]
+    [<Element p at 0x28e3b6ae948>, <Element p at 0x28e3b68dec8>, <Element p at 0x28e3b6b2f48>]
+    [<Element p at 0x28e3b6ae948>, <Element p at 0x28e3b68dec8>, <Element p at 0x28e3b6b2f48>, <Element p at 0x28e3b6b2d48>, <Element p at 0x28e3b6b21c8>]
+
 
 As you can see, you can do xpath from any node in lxml. One important thing though : xpath `//tagname` *will return to the root* if you do not add a dot in front of it such as **`.`**`//tagname`. This is really important to remember, because most xpath resolvers do not behave this way.
-
-**Xpath with namespaces and prefix**
-
-As you've seen, lxml use Clark's naming convention for expressing namespaces. This is extremely important regarding xpath, because you will be able to retrieve a node using it under certain conditions :
-
-
-```python
-xml = """<root>
-<tag xmlns="http://localhost">Text</tag>
-<tei:tag xmlns:tei="http://www.tei-c.org/ns/1.0"></tei:tag>
-</root>"""
-root = etree.fromstring(xml)
-
-print(root.xpath("//tag")) # Does not retrieve anything because both tags have a namespace
-print(root.findall("{http://localhost}tag")) # Retrieve first tag
-
-print(root.xpath("//{http://www.tei-c.org/ns/1.0}tag")) # Will fail
-```
-
-    []
-    [<Element {http://localhost}tag at 0x262a25c9888>]
-    
-
-
-    ---------------------------------------------------------------------------
-
-    XPathEvalError                            Traceback (most recent call last)
-
-    <ipython-input-22-b3d32d8a5404> in <module>()
-          8 print(root.findall("{http://localhost}tag")) # Retrieve first tag
-          9 
-    ---> 10 print(root.xpath("//{http://www.tei-c.org/ns/1.0}tag")) # Will fail
-    
-
-    lxml.etree.pyx in lxml.etree._Element.xpath (src\lxml\lxml.etree.c:57803)()
-    
-
-    xpath.pxi in lxml.etree.XPathElementEvaluator.__call__ (src\lxml\lxml.etree.c:166824)()
-    
-
-    xpath.pxi in lxml.etree._XPathEvaluatorBase._handle_result (src\lxml\lxml.etree.c:165783)()
-    
-
-    XPathEvalError: Invalid expression
-
-
-The last line failed because Clark's notation is not accepted in xpath. To succeed, you will need to use a namespace dictionary and prefix, which you will feed to the `xpath()` method using the argument `namespaces` : 
-
-
-```python
-# We create a valid xml object
-xml = """<root>
-<tag xmlns="http://localhost">Text</tag>
-<tei:tag xmlns:tei="http://www.tei-c.org/ns/1.0">Other text</tei:tag>
-</root>"""
-root = etree.fromstring(xml)
-# We register every namespaces in a dictionary using prefix as keys :
-ns = {
-    "local" : "http://localhost", # Even if this namespace had no prefix, we can register one for it
-    "tei" : "http://www.tei-c.org/ns/1.0"
-}
-tag_1 = root.xpath("//local:tag", namespaces=ns)
-print(tag_1[0].text)
-tag_2 = root.xpath("//tei:tag", namespaces=ns)
-print(tag_2[0].text)
-```
-
-    Text
-    Other text
-    
 
 Another point to kepe in mind : if you write your xpath incorrectly, Python will raise an *XPathEvalError * error
 
@@ -462,22 +410,41 @@ root.xpath("wrong:xpath:never:works")
 
     ---------------------------------------------------------------------------
 
-    XPathEvalError                            Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
-    <ipython-input-26-71f4dbcd4ccf> in <module>()
+    <ipython-input-22-71f4dbcd4ccf> in <module>()
     ----> 1 root.xpath("wrong:xpath:never:works")
     
 
-    lxml.etree.pyx in lxml.etree._Element.xpath (src\lxml\lxml.etree.c:57803)()
-    
+    NameError: name 'root' is not defined
 
-    xpath.pxi in lxml.etree.XPathElementEvaluator.__call__ (src\lxml\lxml.etree.c:166824)()
-    
 
-    xpath.pxi in lxml.etree._XPathEvaluatorBase._handle_result (src\lxml\lxml.etree.c:165783)()
-    
+**Xpath with namespaces and prefix**
 
-    XPathEvalError: Undefined namespace prefix
+As you've seen, lxml use Clark's naming convention for expressing namespaces. This is extremely important regarding xpath, because you will be able to retrieve a node using it under certain conditions :
+
+
+```python
+# We create a valid xml object
+xml = """<root>
+<tag xmlns="http://localhost">Text</tag>
+<tei:tag xmlns:tei="http://www.tei-c.org/ns/1.0">Other text</tei:tag>
+<teiTwo:tag xmlns:teiTwo="http://www.tei-c.org/ns/2.0">Other text</teiTwo:tag>
+</root>"""
+root = etree.fromstring(xml)
+# We register every namespaces in a dictionary using prefix as keys :
+ns = {
+    "local" : "http://localhost", # Even if this namespace had no prefix, we can register one for it
+    "tei" : "http://www.tei-c.org/ns/1.0",
+    "two": "http://www.tei-c.org/ns/2.0"
+}
+
+print([d.text for namespace in ns 
+       for d in root.xpath("//{namespace}:tag".format(namespace=namespace), 
+                           namespaces=ns) ])
+```
+
+    ['Text', 'Other text', 'Other text']
 
 
 **What you have learned** :
@@ -489,13 +456,13 @@ root.xpath("wrong:xpath:never:works")
 - Method `xpath()` accepts a `namespaces` argument : you should enter a dictionary where keys are prefixes and values namespaces
 - Unlike `findall()`, `xpath()` does not accept Clark's notation
 
-### XSLT
+### 1.4.2 XSLT
 
 XSLT stands for *Extensible Stylesheet Language Transformations*. It's an xml-based language made for transforming xml documents to xml or other formats such as LaTeX and HTML. XSLT is really powerful when dealing with similarly formated data. It's far easier to transform 100 documents with the exact same structure via XSLT than in Python or any other language.
 
 While Python is great at dealing with weird transformations of xml, the presence of XSLT in Python allows you to create production chains without leaving your favorite IDE.
 
-To do some XSL, lxml needs two things : first, an xml document representing the xsl that will be parsed and entered into the function `etree.XSLT()`, and second, a document to transform. 
+To do some XSL, lxml needs two things : first, an xml document representing the xsl that will be parsed and entered into the function `etree.XSLT()`, and second, a document to transform.
 
 
 ```python
@@ -534,7 +501,7 @@ print(transformed)
         <name>German</name>
     </fields>
     
-    
+
 
 Did you see what happened ? We used `xslt(xml)`. `etree.XSLT()` transforms a xsl document into a function, which then takes one parameter (in this case an xml document). But can you figure out what this returns ? Let's ask Python :
 
@@ -546,7 +513,7 @@ print(type(parsed_xml))
 
     <class 'lxml.etree._XSLTResultTree'>
     <class 'lxml.etree._Element'>
-    
+
 
 The result is not of the same type of element we usually have, even though it does share most of its methods and attributes :
 
@@ -556,7 +523,7 @@ print(transformed.xpath("//name"))
 ```
 
     [<Element name at 0x262a25c9688>, <Element name at 0x262a25bdfc8>, <Element name at 0x262a25bddc8>, <Element name at 0x262a25bde88>]
-    
+
 
 And has something more : you can change its type to string !
 
@@ -574,7 +541,7 @@ print(string_result)
         <name>German</name>
     </fields>
     
-    
+
 
 XSLT is more complex than just inputing xml. You can do XSLT using parameters as well. In this case, your parameters will be accessibles as a named argument to the generated function. If your XSL has a `name` xsl-param, the function given back by `etree.XSLT` will have a `name` argument :
 
@@ -624,9 +591,10 @@ print(transformed)
     <?xml version="1.0"?>
     <fields n="Humanities"><name>History</name><name>Classics</name><name>French</name><name>German</name></fields>
     
-    
 
-# Using ElementTree
+
+# 2. Using ElementTree
+
 ----
 
 
@@ -639,18 +607,18 @@ with open('data/books.xml', 'rt') as f:
 print(tree)
 ```
 
-    <xml.etree.ElementTree.ElementTree object at 0x0000028AF484AE10>
-    
+    <xml.etree.ElementTree.ElementTree object at 0x0000028E3B6CD0B8>
 
-## Traversing the Parsed Tree
----
+
+## 2.1 Traversing the Parsed Tree
+
 To visit all of the children in order, use iter() to create a generator that iterates over the ElementTree instance.
 
 
 ```python
 from xml.etree import ElementTree
 
-with open('data/books.xml', 'rt') as f:
+with open('data/books.xml', 'r') as f:
     tree = ElementTree.parse(f)
 
 # print(dir(tree))
@@ -660,7 +628,7 @@ for node in tree.iter():
     print("-----")
 ```
 
-    ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_root', '_setroot', 'find', 'findall', 'findtext', 'getiterator', 'getroot', 'iter', 'iterfind', 'parse', 'write', 'write_c14n']
+    <class 'xml.etree.ElementTree.ElementTree'>
     catalog {}
     -----
     book {'id': 'bk101'}
@@ -670,6 +638,8 @@ for node in tree.iter():
     title {}
     -----
     genre {}
+    -----
+    book {'part': '2'}
     -----
     price {}
     -----
@@ -831,7 +801,37 @@ for node in tree.iter():
     -----
     description {}
     -----
-    
+
+
+
+```python
+# from xml.etree import ElementTree
+
+# with open('data/books.xml', 'r') as f:
+#     tree = ElementTree.parse(f)
+
+# # print(dir(tree))
+
+# for node in tree.iter():
+#     print (node.tag, node.attrib)
+#     print("-----")
+```
+
+
+    ---------------------------------------------------------------------------
+
+    TypeError                                 Traceback (most recent call last)
+
+    <ipython-input-29-cc71414d1244> in <module>()
+          6 # print(dir(tree))
+          7 
+    ----> 8 for node in tree:
+          9     print (node.tag, node.attrib)
+         10     print("-----")
+
+
+    TypeError: 'ElementTree' object is not iterable
+
 
 
 ```python
@@ -844,6 +844,7 @@ from xml.etree import ElementTree
 with open('data/podcasts.opml', 'rt') as f:
     tree = ElementTree.parse(f)
 
+print(len( list(tree.iter('outline'))))
 for node in tree.iter('outline'):
     name = node.attrib.get('text')
     url = node.attrib.get('xmlUrl')
@@ -851,9 +852,9 @@ for node in tree.iter('outline'):
         print ('\t%s :: %s' % (name, url))
     else:
         print (name)
-
 ```
 
+    18
     Science and Tech
     	APM: Future Tense :: http://www.publicradio.org/columns/futuretense/podcast.xml
     	Engines Of Our Ingenuity Podcast :: http://www.npr.org/rss/podcast.php?id=510030
@@ -872,9 +873,9 @@ for node in tree.iter('outline'):
     	Django Dose Everything Feed :: http://djangodose.com/everything/feed/
     Miscelaneous
     	dhellmann's CastSampler Feed :: http://www.castsampler.com/cast/feed/rss/dhellmann/
-    
 
-### Finding Nodes in a Document¶
+
+### 2.1.1 Finding Nodes in a Document¶
 
 Walking the entire tree like this searching for relevant nodes can be error prone. The example above had to look at each outline node to determine if it was a group (nodes with only a text attribute) or podcast (with both text and xmlUrl). To produce a simple list of the podcast feed URLs, without names or groups, for a podcast downloader application, the logic could be simplified using findall() to look for nodes with more descriptive search characteristics.
 
@@ -882,7 +883,6 @@ As a first pass at converting the above example, we can construct an XPath argum
 
 
 ```python
-
 for node in tree.findall('.//outline'):
     url = node.attrib.get('xmlUrl')
     if url:
@@ -909,7 +909,7 @@ for node in tree.findall('.//outline'):
     http://djangodose.com/everything/feed/
     Miscelaneous
     http://www.castsampler.com/cast/feed/rss/dhellmann/
-    
+
 
 
 ```python
@@ -919,7 +919,7 @@ print(tree.getroot)
 
     ['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_root', '_setroot', 'find', 'findall', 'findtext', 'getiterator', 'getroot', 'iter', 'iterfind', 'parse', 'write', 'write_c14n']
     <bound method ElementTree.getroot of <xml.etree.ElementTree.ElementTree object at 0x0000028AF4878320>>
-    
+
 
 Another version can take advantage of the fact that the outline nodes are only nested two levels deep. Changing the search path to .//outline/outline mean the loop will process only the second level of outline nodes.
 
@@ -943,9 +943,9 @@ for node in tree.findall('.//outline/outline'):
     http://advocacy.python.org/podcasts/littlebit.rss
     http://djangodose.com/everything/feed/
     http://www.castsampler.com/cast/feed/rss/dhellmann/
-    
 
-### Parsed Node Attributes
+
+### 2.1.2 Parsed Node Attributes
 
 The items returned by findall() and iter() are Element objects, each representing a node in the XML parse tree. Each Element has attributes for accessing data pulled out of the XML. This can be illustrated with a somewhat more contrived example input file, data.xml:
 
@@ -958,6 +958,7 @@ with open('data/data.xml', 'rt') as f:
 
 node = tree.find('./with_attributes')
 print (node.tag)
+
 for name, value in sorted(node.attrib.items()):
     print ('  %-4s = "%s"' % (name, value))
 ```
@@ -965,13 +966,14 @@ for name, value in sorted(node.attrib.items()):
     with_attributes
       foo  = "bar"
       name = "value"
-    
+      testtest = "thisis atest"
+
 
 
 ```python
 for path in [ './child', './child_with_tail' ]:
     node = tree.find(path)
-    print( node.tag)
+    print(node.tag)
     print ('  child node text:', node.text)
     print ('  and tail text  :', node.tail)
 ```
@@ -984,9 +986,9 @@ for path in [ './child', './child_with_tail' ]:
       child node text: This child has regular text.
       and tail text  : And "tail" text.
       
-    
 
-### Parsing Strings 
+
+### 2.1.3 Parsing Strings
 
 To work with smaller bits of XML text, especially string literals as might be embedded in the source of a program, use XML() and the string containing the XML to be parsed as the only argument.
 
@@ -1022,12 +1024,11 @@ for elem in parsed:
     parsed = <Element 'root' at 0x00000262A2604228>
     group
     group
-    
+
 
 
 ```python
 from xml.etree.ElementTree import Element, tostring
-
 
 top = Element('top')
 
@@ -1041,10 +1042,5 @@ top.extend(children)
 print(top)
 ```
 
-    <Element 'top' at 0x0000028AF48A0598>
-    
+    <Element 'top' at 0x000001C332EE3CC8>
 
-
-```python
-
-```

@@ -33,31 +33,5 @@ if __name__ == "__main__":
 ```
 
     ('pool.ntp.org', 123)
-    
+    Wed Sep 27 19:24:50 2017
 
-
-    ---------------------------------------------------------------------------
-
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-4-c5b0a5c09c26> in <module>()
-         25 
-         26 if __name__ == "__main__":
-    ---> 27         print (getNTPTime())
-    
-
-    <ipython-input-4-c5b0a5c09c26> in getNTPTime(host)
-         17         # connect to server
-         18         client = socket.socket( AF_INET, SOCK_DGRAM)
-    ---> 19         client.sendto(msg, address)
-         20         msg, address = client.recvfrom( buf )
-         21 
-    
-
-    TypeError: a bytes-like object is required, not 'str'
-
-
-
-```python
-
-```
