@@ -1,5 +1,5 @@
-# Preface
 
+# Preface
 ---
 
 This book has been created as part of reference material for learning Python languages.
@@ -16,7 +16,7 @@ This ebook will try to covers core python. This section is specifically designed
 
 These books on python are collection of materials which I use when conducting Python training and also materials from my Web site that are intended for self-instruction.
 
-Most of the material has been collected from internet. Primary source of the books are
+Most of the material has been collected from internet. Primary source of the information in the book has been from the followings.
 
 1. My Understanding of Python
 
@@ -29,6 +29,7 @@ Most of the material has been collected from internet. Primary source of the boo
 5. Wikipedia
 
 6. Wiki-books, etc
+
 
 
 

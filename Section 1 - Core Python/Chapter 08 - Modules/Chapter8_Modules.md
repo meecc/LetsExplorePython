@@ -21,14 +21,18 @@ The modules are loaded with the `import` statement. Thus, when using a module st
 
 ```python
 import os
-print(os.name)
-print(type(os.name))
-print(os.path.abspath(os.path.curdir))
+
+def get_os_details():
+    print(os.name)
+    print(type(os.name))
+    print(os.path.abspath(os.path.curdir))
+
+get_os_details()
 ```
 
-    nt
+    posix
     <class 'str'>
-    e:\code\mj\lep\Section 1 - Core Python\Chapter 08 - Modules
+    /home/mayank/code/mj/lep/Section 1 - Core Python/Chapter 08 - Modules
 
 
 ## The from...import Statement

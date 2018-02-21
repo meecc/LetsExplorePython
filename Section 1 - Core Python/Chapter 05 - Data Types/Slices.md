@@ -72,12 +72,12 @@ x = 10
 print(id(x))
 x = "Mayank Johri"
 print(x)
-print(id(x))
-print(id(x[0]))
-print(id(x[1]))
-print(id(x[2]))
-print(x[0])
-print(x[1])
+print("id(x)",id(x))
+print("x[0:]", id(x[0:]))
+print(id(x[1:]))
+print(id(x[2:]))
+print(x[0:])
+print(x[1:])
 print(x[2])
 
 x = "God knows"
@@ -90,3 +90,22 @@ print(x[0])
 print(x[1])
 print(x[2])
 ```
+
+    139791751322304
+    Mayank Johri
+    id(x) 139791526564528
+    x[0:] 139791526564528
+    139791526658864
+    139791526658928
+    Mayank Johri
+    ayank Johri
+    y
+    God knows
+    139791526566640
+    139791731810800
+    139791729111088
+    139791732421216
+    G
+    o
+    d
+
