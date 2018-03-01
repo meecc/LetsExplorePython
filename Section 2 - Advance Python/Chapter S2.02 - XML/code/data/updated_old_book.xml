@@ -1,0 +1,14 @@
+<books>
+    <book title="Rig-Veda Khil&#257;ni">
+        <editor>Jost Gippert</editor>
+        <publication>Frankfurt: TITUS</publication>
+        <year>2008</year>
+        <web_page>http://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/rv/rvkh/rvkh.htm</web_page>
+    </book>    
+    <book title="&#7770;gveda-Sa&#7747;hit&#257;">
+        <editor>Jost Gippert</editor>
+        <publication>Frankfurt: TITUS</publication>
+        <year>2000</year>
+        <web_page>http://titus.uni-frankfurt.de/texte/etcs/ind/aind/ved/rv/mt/rv.htm</web_page>
+    </book>	
+</books>
