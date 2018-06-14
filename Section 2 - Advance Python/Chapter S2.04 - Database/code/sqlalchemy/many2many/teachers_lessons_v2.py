@@ -42,6 +42,7 @@ if __name__ == "__main__":
     s = Session()
 
     t1 = Teacher(name="Sharma Sir")
+
     t1.lessons = [
         Lesson(name="Inorganic"),
         Lesson(name="Multiplication"),

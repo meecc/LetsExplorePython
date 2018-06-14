@@ -36,6 +36,7 @@ class Students(Base):
     school_id = Column(Integer, ForeignKey('school.id'))
     school = relationship("School", back_populates="student")
 
+
 class School(Base):
     __tablename__ = 'school'
     id = Column(Integer, primary_key=True)

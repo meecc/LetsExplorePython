@@ -60,7 +60,7 @@ dms = School()
 dms.name = "Demonstration Multipurpose Higher Secondary School"
 session.add(dms)
 
-session.add(School(name="CDAC"))
+session.add(School(name="CDAC, Hyderabad"))
 session.flush()
 session.commit()
 

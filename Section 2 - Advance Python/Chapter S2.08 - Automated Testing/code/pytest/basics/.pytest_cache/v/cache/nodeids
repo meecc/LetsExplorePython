@@ -1,0 +1,4 @@
+[
+  "test_basic_1.py::test_will_fail",
+  "test_basic_1.py::test_will_pass"
+]

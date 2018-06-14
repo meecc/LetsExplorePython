@@ -50,7 +50,7 @@ try:
 except Exception as e:
     print(e)
 
-engine = create_engine('sqlite:///' + DB_FILE, echo=True)
+engine = create_engine('sqlite:///' + DB_FILE, echo=False)
 Base.metadata.create_all(engine)
 
 Session = sessionmaker(bind=engine)
@@ -126,8 +126,11 @@ print(session.dirty)
 #-----------------------------------------------------------------------
 #"""
 print("*" * 20)
-for student in session.query(Students).order_by(Students.id):
-   print("{user} studied in {school}".format(user=student.name, school=student.cream.name))
+for student in session.query(Students).order_by(Students.name):
+    # print("{{ student.name }} studied in {student.cream.name}")
+   print("{id}: {user} studied in {school}".format(id=student.id,
+                                                   user=student.name,
+                                                   school=student.cream.name))
 print("*" * 20)
 #for result in session.query(Students.name).order_by(Students.id):
 #    print("{user} was a student.".format(user=result.name))
@@ -146,5 +149,5 @@ print("*" * 20)
 #-----------------------------------------------------------------------
 #"""
 #print("*" * 20)
-#session.close()
+session.close()
 engine.dispose()

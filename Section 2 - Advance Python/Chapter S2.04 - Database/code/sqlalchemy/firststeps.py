@@ -5,7 +5,7 @@ Created on Wed Aug 17 06:06:08 2016
 @author: hclqaVirtualBox1
 """
 
-from sqlalchemy import *
+from sqlalchemy import create_engine, BoundMetaData
 
 db = create_engine('sqlite:///tutorial.db')
 
@@ -19,6 +19,8 @@ users = Table('users', metadata,
     Column('age', Integer),
     Column('password', String),
 )
+
+
 users.create()
 
 i = users.insert()

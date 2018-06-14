@@ -1,7 +1,5 @@
-def 
-
-
-Class XYZ:
+ 
+class XYZ:
     """
     >>> x = XYZ()
     >>> x.name = “Mayank”
@@ -12,3 +10,4 @@ Class XYZ:
     >>> print(x.a)
     Hello World
     """
+    pass

@@ -10,7 +10,7 @@ class Test_PythonHomePage:
         with open("config.yaml", 'r') as stream:
             try:
                 cls.conf = yaml.load(stream)
-                print(cls.conf['Browser']) 
+                print(cls.conf['Browser'])
             except yaml.YAMLError as exc:
                 print(exc)
 

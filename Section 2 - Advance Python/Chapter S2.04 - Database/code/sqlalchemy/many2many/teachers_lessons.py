@@ -2,6 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy import Table, Column, Integer, String, ForeignKey, Sequence
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, relationship
+from sqlalchemy.exc import IntegrityError
+
 
 Base = declarative_base()
 
@@ -17,7 +19,7 @@ class Teacher(Base):
     __tablename__ = "teachers"
 
     id = Column("id", Integer, Sequence("teachers_id_seq"), primary_key=True)
-    name = Column("name", String(50), nullable=False)
+    name = Column("name", String(50), nullable=False, unique=True)
 
     lessons = relationship(
         "Lesson",
@@ -41,14 +43,25 @@ if __name__ == "__main__":
 
     s = Session()
 
-    t1 = Teacher(name="Sharma Sir")
+    t1 = s.query(Teacher).filter_by(name="Sharma Sir 1").first()
+    if not t1:
+        t1 = Teacher(name="Sharma Sir 1")
+        s.add(t1)
+        s.flush()
+        s.commit()
+
     t1.lessons = [
         Lesson(name="Inorganic"),
         Lesson(name="Multiplication"),
         Lesson(name="Organic")
     ]
-    s.add(t1)
-    t2 = Teacher(name="GuptaSir")
+    t2 = s.query(Teacher).filter_by(name="GuptaSir").first()
+    if not t1:
+        t2 = Teacher(name="GuptaSir")
+        s.add(t2)
+        s.flush()
+        s.commit()
+
     t2.lessons = [
         Lesson(name="Multiplication"),
         Lesson(name="Subtraction"),

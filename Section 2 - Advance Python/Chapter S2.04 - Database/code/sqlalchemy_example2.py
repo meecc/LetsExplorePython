@@ -6,9 +6,12 @@ Created on Mon Aug 15 13:07:26 2016
 """
 
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy import Column, Integer, String
+
 
 Base = declarative_base()
-from sqlalchemy import Column, Integer, String
+
+
 class User(Base):
     __tablename__ = 'users'
 
@@ -29,13 +32,16 @@ class User(Base):
 if __name__ == "__main__":
     print(User.__table__)
     userinfo = [
-        {"name": "Mayank", "fullname": "Mayank Johri", "password" : "test@1234"},
+        {"name": "Mayank", "fullname": "Mayank Johri", "password": "test@1234"},
         {"name": "Janki Mohan", "fullname": "Janki Mohan Johri", "password" : "vinay@1234"},
-        {"name": "Saroj", "fullname": "Saroj Johri", "password" : "Saroj@1234"}
+        {"name": "Saroj", "fullname": "Saroj Johri", "password": "Saroj@1234"}
     ]
-    
-    for u in userinfo:
-        User(u["name"], u["fullname"], u["password"])
-        pass
 
-    
+    users = []
+    for u in userinfo:
+        users.append(User(u["name"], u["fullname"], u["password"]))
+
+    for user in users:
+        if user.name == "Mayank" or user.password == "test@1234":
+            print("HAHAHAH")
+        print(user)

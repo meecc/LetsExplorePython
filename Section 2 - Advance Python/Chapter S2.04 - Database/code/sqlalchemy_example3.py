@@ -45,14 +45,13 @@ if __name__ == "__main__":
 
     print(User.__table__)
     userinfo = [
-        {"name": "Mayank 1", "fullname": "Mayank Johri", "password" : "test@1234"},
-        {"name": "Janki Mohan 1", "fullname": "Janki Mohan Johri", "password" : "vinay@1234"},
-        {"name": "Saroj 1", "fullname": "Saroj Johri", "password" : "Saroj@1234"}
+        {"name": "Mayank 1", "fullname": "Mayank Johri", "password": "test@1234"},
+        {"name": "Janki Mohan 1", "fullname": "Janki Mohan Johri", "password": "vinay@1234"},
+        {"name": "Saroj 1", "fullname": "Saroj Johri", "password": "Saroj@1234"}
     ]
 
     for u in userinfo:
         user = User(name=u["name"], fullname=u["fullname"], password=u["password"])
         session.add(user)
+        # session.commit()
     session.commit()
-
-

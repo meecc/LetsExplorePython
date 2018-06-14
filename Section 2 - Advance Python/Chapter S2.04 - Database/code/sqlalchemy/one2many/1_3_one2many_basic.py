@@ -43,7 +43,7 @@ class School(Base):
     student = relationship("Students")
 
 
-DB_FILE = "one2many_basic.sqlite"
+DB_FILE = "1_3_one2many_basic.sqlite"
 
 try:
     os.remove(DB_FILE)
@@ -95,10 +95,12 @@ cdac_students = [
 # ## select * from school where name='CDAC' excluding first
 cdac = session.query(School).filter_by(name="CDAC").first()
 # #
+
+### Problem Problem Problem
 session.add_all([Students(name=student, school=cdac)
                  for student in cdac_students])
-# #session.flush()
-# #session.commit()
+session.flush()
+session.commit()
 # ## # --------------------------------------------------
 # #print("^"*30)
 # #print(session.dirty)

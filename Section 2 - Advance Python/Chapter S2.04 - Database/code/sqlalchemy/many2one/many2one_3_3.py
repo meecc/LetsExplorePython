@@ -108,12 +108,15 @@ objects present is returned.
 """
 print("*" * 20)
 for student in session.query(Students).order_by(Students.id):
-    print("{user} studied in {school}".format(user=student.name,
-                                              school=student.school.name))
+    print("{user} studied in {school}, {student}".format(user=student.name,
+                                                         school=student.school.name,
+                                                         student=student))
 print("*" * 20)
 for result in session.query(Students.name).order_by(Students.id):
-    print("{user} was a student.".format(user=result.name))
+    print("{user} was a student. {result}".format(user=result.name, result=result))
 print("*" * 20)
-
+for result in session.query(Students.name, Students.id).order_by(Students.id):
+    print("{user} was a student. {id}".format(user=result.name, id=result.id))
+print("*" * 20)
 session.close()
 engine.dispose()
