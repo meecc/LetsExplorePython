@@ -1,3 +1,2 @@
-"Context Managers are great,
-Context Managers are our Friend.
+Context Managers are great, Context Managers are our Friend.
 So why not use them
